@@ -1,0 +1,37 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.home{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+/* Navbar */
+.navContainer{
+    background-color: white !important;
+}
+.links{
+    text-decoration: none;
+}
+/* Balance */
+.cardBalance{
+    background-color: #1e7368 !important;
+}
+.balanceTitle{
+    color: white;
+}
+.number{
+    color: white;
+    font-size: 3rem !important;
+}
+.addIcon{
+    color: white;
+}
+.buttonAdd{
+    display: flex;
+    flex-direction: row-reverse;
+}
