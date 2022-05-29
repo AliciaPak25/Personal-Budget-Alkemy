@@ -1,11 +1,12 @@
-const Router = require('express').Router();
+const express =  require('express');
+const Router = express.Router();
 
-const mysqlConnection = require('../config/database');
+const pool = require('../config/database');
 
-Router.get('/', (req, res) => {
+/* Router.get('/', (req, res) => {
     mysqlConnection.query('SELECT * FROM records', (error, rows, fields) => {
         if(!error) {
-            res.json(rows);
+        res.json(rows);
         } else {
             console.log(error);
         }
@@ -21,7 +22,7 @@ Router.get('/:id', (req, res) => {
             console.log(error);
         }
     })
-});
+}) */
 
 /* Router.post('/add', (req, res) => {
     mysqlConnection.query('SELECT * FROM records WHERE id = ?', [id], (error, rows, fields) => {

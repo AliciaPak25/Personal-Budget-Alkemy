@@ -90,7 +90,7 @@ const Form = () => {
                     <legend className='legend'>Category</legend>
                     <SelectCategory/>
                 </fieldset>
-                <button class="btn">
+                <button className="btn">
                     Done
                 </button>
             </form>

@@ -6,6 +6,7 @@ const Home = () => {
         <div className="home">
         <Balance />
         <ListLastRecords />
+        View all movements
         </div>
     )
 }
