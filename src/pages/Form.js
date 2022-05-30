@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/Form.css'
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
@@ -8,9 +8,12 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import { pink } from '@mui/material/colors';
 import Radio from '@mui/material/Radio';
 import SelectCategory from '../components/Form/Select';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Form = () => {
-    const [values, setValues] = React.useState({
+    const [startDate, setStartDate] = useState(new Date());
+    const [values, setValues] = useState({
         amount: '',
         });
 
@@ -34,7 +37,7 @@ const Form = () => {
 
     return(
         <div className='divForm'>
-            <form className='form'>
+            <form className='form' action="/records/add">
                 <h2 className='titleOfForm'>Add an income or an expense to your budget</h2>
                 <fieldset className='fieldset'>
                 <legend className='legend'>Concept</legend>
@@ -44,6 +47,7 @@ const Form = () => {
                 placeholder="How do you want to identify your income/expense?"
                 multiline
                 className='inputWidth'
+                autoFocus
                 />
                 </fieldset>
                 <fieldset className='fieldset'>
@@ -63,7 +67,9 @@ const Form = () => {
                 </fieldset>
                 <fieldset className='fieldset'>
                     <legend className='legend'>Date</legend>
-                    <TextField id="outlined-basic" label="" variant="outlined" type="date" className='inputWidth'/>
+                    {/* <TextField id="outlined-basic" label="" variant="outlined" placeholder="YYYY/MM/DD" className='inputWidth' /> */}
+                    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} dateFormat="yyyy/MM/dd" minDate={new Date('1900/03/01')}
+                    maxDate={new Date('2030/06/01')}/>
                 </fieldset>
                 <fieldset className='fieldset'>
                     <legend className='legend'>Type</legend>
@@ -90,7 +96,7 @@ const Form = () => {
                     <legend className='legend'>Category</legend>
                     <SelectCategory/>
                 </fieldset>
-                <button className="btn">
+                <button className="btn" >
                     Done
                 </button>
             </form>

@@ -1,6 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
 
+//Importing routes
+const Router = require('./routes/routes');
+
 //Initializations
 const app = express();
 
@@ -18,9 +21,11 @@ app.use((req, res, next) => {
 });
 
 //Routes
-app.use(require('./routes/routes'));
+app.use('/api', Router);
+
+/* app.use(require('./routes/routes'));
 app.use(require('./routes/authentication'));
-app.use('/records', require('./routes/records.routes'));
+app.use('/records', require('./routes/records.routes')); */
 
 //Starting the server
 app.listen(app.get('port'), () => console.log('Server ready on PORT ' + app.get('port')));

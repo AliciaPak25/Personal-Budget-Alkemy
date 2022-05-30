@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import MyFinances from './pages/MyFinances';
 import Form from './pages/Form';
+import { connect } from 'react-redux';
 
 function App() {
   return (
