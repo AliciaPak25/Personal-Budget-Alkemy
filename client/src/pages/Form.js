@@ -11,17 +11,20 @@ import ListSubheader from '@mui/material/ListSubheader';
 import Select from '@mui/material/Select';
 import { addRecord } from '../redux/actions/budgetActions';
 import { useSelector, useDispatch } from 'react-redux';
+import { pink } from '@mui/material/colors';
+import Radio from '@mui/material/Radio';
+
 
 const Form = () => {
-    const { budget, status } = useSelector((state) => state.budget)
+    /* const { budget, status } = useSelector((state) => state.budget)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(addRecord())
-    },[])
+    },[]) */
 
     //select
-    const [category, setCategory] = useState('');
+    /* const [category, setCategory] = useState('');
 
     const handleChange = (event) => {
         setCategory(event.target.value);
@@ -30,9 +33,9 @@ const Form = () => {
     const handleSelect = (event) => {
         handleChange(event);
         handleInputChange(event);
-    };
+    }; */
     //submit section, all info sent to backend
-    const [newRecord, setNewRecord] = useState({
+  /*   const [newRecord, setNewRecord] = useState({
         concept: '',
         amount: 0,
         dateOfRecord: '',
@@ -57,11 +60,33 @@ const Form = () => {
         typeOfRecord: '',
         category: '', 
         from: "form-budget"})
+    } */
+    const [selectedValue, setSelectedValue] = React.useState('');
+
+    const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+    };
+
+    const controlProps = (item) => ({
+    checked: selectedValue === item,
+    onChange: handleChange,
+    value: item,
+    name: 'typeOfRecord',
+    inputProps: { 'aria-label': item },
+    });
+
+    const [concept, setConcept] = useState('');
+    const [amount, setAmount] = useState(0);
+    const [dateOfRecord, setDateOfRecord] = useState('');
+    const [typeOfRecord, setTypeOfRecord] = useState('');
+    const [category, setCategory] = useState('');
+
+    const displayInfo = () => {
+        console.log(concept + amount + dateOfRecord + typeOfRecord + category);
     }
-    
     return(
         <div className='divForm'>
-            <form className='form' onSubmit={handleSubmit}>
+            <form className='form' /* onSubmit={handleSubmit} */ action='http://localhost:5000/create' method='POST'>
                 <h2 className='titleOfForm'>Add an income or an expense to your budget</h2>
                 <fieldset className='fieldset'>
                 <legend className='legend'>Concept</legend>
@@ -73,7 +98,9 @@ const Form = () => {
                 className='inputWidth'
                 autoFocus
                 name='concept'
-                onChange={handleInputChange}
+                onChange={(event) => {
+                    setConcept(event.target.value);
+                }}
                 />
                 </fieldset>
                 <fieldset className='fieldset'>
@@ -83,7 +110,9 @@ const Form = () => {
                     <OutlinedInput
                         id="outlined-adornment-amount"
                         name='amount'
-                        onChange={handleInputChange}
+                        onChange={(event) => {
+                            setAmount(event.target.value);
+                        }}
                         startAdornment={<InputAdornment position="start">$</InputAdornment>}
                         label="Amount"
                         type='number'
@@ -93,7 +122,7 @@ const Form = () => {
                 </fieldset>
                 <fieldset className='fieldset'>
                     <legend className='legend'>Date</legend>
-                    <TextField id="outlined-basic" label="" variant="outlined" placeholder="YYYY/MM/DD, example: 2022/05/30" className='inputWidth' onChange={handleInputChange} name='dateOfRecord' />
+                    <TextField id="outlined-basic" label="" variant="outlined" placeholder="YYYY/MM/DD, example: 2022/05/30" className='inputWidth' onChange={(event) => {setDateOfRecord(event.target.value);}} name='dateOfRecord' />
                     {/* <DatePicker
                     selected={startDate} 
                     onChange={handleDate}
@@ -107,15 +136,24 @@ const Form = () => {
                     <legend className='legend'>Type</legend>
                     <div className='divRadios'>
                         <div className='divRadio'>
-                            <input color="success" name='typeofRecord' onChange={handleInputChange} value='income' type="radio"/>
+                        <Radio {...controlProps('income')} color="success" />
+                            {/* <input color="success" name='typeofRecord' onChange={(event)=>{setTypeOfRecord(event.target.value)}} value='income' type="radio"/> */}
                             <label>Income</label>
                         </div>
                         <div className='divRadio'>
-                            <input
+                           {/*  <input
                                 value='expense'
-                                onChange={handleInputChange}
                                 name='typeofRecord'
                                 type="radio"
+                            /> */}
+                            <Radio
+                                {...controlProps('expense')}
+                                sx={{
+                                color: pink[800],
+                                '&.Mui-checked': {
+                                    color: pink[600],
+                                },
+                                }}
                             />
                             <label>Expense</label>
                         </div>
@@ -125,32 +163,32 @@ const Form = () => {
                     <legend className='legend'>Category</legend>
                     <FormControl sx={{ m: 1, width: 395 }}>
                         <InputLabel htmlFor="grouped-select">Select a category</InputLabel>
-                        <Select id="grouped-select" label="Select a category" value={newRecord.category} onChange={handleSelect} name='category'>
+                        <Select id="grouped-select" label="Select a category" value={category} onChange={(event) => {setCategory(event.target.value)}} name='category'>
                         <MenuItem value="">
                             <em>None</em>
                         </MenuItem>
                         <ListSubheader>Income</ListSubheader>
-                        <MenuItem value={1}>Salary</MenuItem>
-                        <MenuItem value={2}>Freelance</MenuItem>
-                        <MenuItem value={3}>Investments</MenuItem>
-                        <MenuItem value={4}>Extra Income</MenuItem>
-                        <MenuItem value={5}>Christmas Bonus</MenuItem>
+                        <MenuItem value={'Salary'}>Salary</MenuItem>
+                        <MenuItem value={'Freelance'}>Freelance</MenuItem>
+                        <MenuItem value={'Investments'}>Investments</MenuItem>
+                        <MenuItem value={'Extra Income'}>Extra Income</MenuItem>
+                        <MenuItem value={'Christmas Bonus'}>Christmas Bonus</MenuItem>
                         <ListSubheader>Expenses</ListSubheader>
-                        <MenuItem value={6}>Rent</MenuItem>
-                        <MenuItem value={7}>Taxes</MenuItem>
-                        <MenuItem value={8}>Services</MenuItem>
-                        <MenuItem value={9}>Education</MenuItem>
-                        <MenuItem value={10}>Credit Card</MenuItem>
+                        <MenuItem value={'Rent'}>Rent</MenuItem>
+                        <MenuItem value={'Taxes'}>Taxes</MenuItem>
+                        <MenuItem value={'Services'}>Services</MenuItem>
+                        <MenuItem value={'Education'}>Education</MenuItem>
+                        <MenuItem value={'Credit Card'}>Credit Card</MenuItem>
                         <ListSubheader>Other option</ListSubheader>
-                        <MenuItem value={11}>Other</MenuItem>
+                        <MenuItem value={'Other'}>Other</MenuItem>
                         </Select>
                     </FormControl>
                 </fieldset>
-                <button className="btn" type='submit'>
+                <button className="btn" onClick={displayInfo}>
                     Done
                 </button>
             </form>
-            {status === 'success' ? (budget) : null} 
+           {/*  {status === 'success' ? (budget) : null}  */}
         </div>
     );
 }
