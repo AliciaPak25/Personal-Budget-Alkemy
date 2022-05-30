@@ -24,7 +24,7 @@ CREATE TABLE records (
     concept VARCHAR(150) NOT NULL,
     amount  FLOAT NOT NULL,
     dateOfRecord DATE NOT NULL,
-    typeOfRecord TINYINT NOT NULL,
+    typeOfRecord VARCHAR(45) NOT NULL,
     category VARCHAR(45),
     user_id INT,
     created_at timestamp DEFAULT current_timestamp,
