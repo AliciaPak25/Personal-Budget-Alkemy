@@ -3,14 +3,7 @@ const Router = express.Router();
 
 const pool = require('../config/database');
 
-const budgetController = require('../controllers/budgetController')
-const {createRecord, former} = budgetController
-
-Router.get('/records', (req, res) => {
-    res.send('Form');
-});
-
-Router.post('/create', (req, res) => {
+Router.post('/create', async (req, res) => {
     const { concept, amount, dateOfRecord, typeOfRecord, category } = req.body;
     const newRecord ={
         concept,
@@ -19,9 +12,19 @@ Router.post('/create', (req, res) => {
         typeOfRecord, 
         category
     }
-    console.log(newRecord);
+    await pool.query('INSERT INTO records set ?', [newRecord]);
     res.send('received');
 })
 
+Router.get('/records', async (req, res) => {
+    await pool.query('SELECT * FROM records'), (error, result) => {
+        if (error) {
+            console.log(error);
+        } else {
+            res.send(result);
+        }
+    }
+    
+});
 
 module.exports = Router;

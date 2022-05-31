@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../styles/Form.css'
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
@@ -9,11 +9,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import MenuItem from '@mui/material/MenuItem';
 import ListSubheader from '@mui/material/ListSubheader';
 import Select from '@mui/material/Select';
-import { addRecord } from '../redux/actions/budgetActions';
-import { useSelector, useDispatch } from 'react-redux';
 import { pink } from '@mui/material/colors';
 import Radio from '@mui/material/Radio';
-
+import axios from 'axios';
 
 const Form = () => {
     /* const { budget, status } = useSelector((state) => state.budget)
@@ -61,19 +59,6 @@ const Form = () => {
         category: '', 
         from: "form-budget"})
     } */
-    const [selectedValue, setSelectedValue] = React.useState('');
-
-    const handleChange = (event) => {
-    setSelectedValue(event.target.value);
-    };
-
-    const controlProps = (item) => ({
-    checked: selectedValue === item,
-    onChange: handleChange,
-    value: item,
-    name: 'typeOfRecord',
-    inputProps: { 'aria-label': item },
-    });
 
     const [concept, setConcept] = useState('');
     const [amount, setAmount] = useState(0);
@@ -81,12 +66,33 @@ const Form = () => {
     const [typeOfRecord, setTypeOfRecord] = useState('');
     const [category, setCategory] = useState('');
 
-    const displayInfo = () => {
-        console.log(concept + amount + dateOfRecord + typeOfRecord + category);
-    }
+    const handleChange = (event) => {
+        setTypeOfRecord(event.target.value);
+        };
+    
+        const controlProps = (item) => ({
+        checked: typeOfRecord === item,
+        onChange: handleChange,
+        value: item,
+        name: 'typeOfRecord',
+        inputProps: { 'aria-label': item },
+        });
+
+    const addRecord = () => {
+        axios.post('http://localhost:5000/create', {
+        concept: concept, 
+        amount: amount, 
+        dateOfRecord: dateOfRecord, 
+        typeOfRecord: typeOfRecord, 
+        category: category,
+        }).then(() => {
+            console.log('success');
+        })
+    };
+    
     return(
         <div className='divForm'>
-            <form className='form' /* onSubmit={handleSubmit} */ action='http://localhost:5000/create' method='POST'>
+            <form className='form'>
                 <h2 className='titleOfForm'>Add an income or an expense to your budget</h2>
                 <fieldset className='fieldset'>
                 <legend className='legend'>Concept</legend>
@@ -184,7 +190,7 @@ const Form = () => {
                         </Select>
                     </FormControl>
                 </fieldset>
-                <button className="btn" onClick={displayInfo}>
+                <button className="btn" onClick={addRecord}>
                     Done
                 </button>
             </form>

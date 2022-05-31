@@ -1,20 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import budgetSlice from '../reducers/budgetSlice';
+import BudgetReducer from '../features/budgetSlice'
 
-const ReduxStore = configureStore({
+export default configureStore({
     reducer: {
-        budget: budgetSlice,
+        budget: BudgetReducer,
     },
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: {
-                // Ignore these field paths in all actions
-                ignoredActionPaths: ['payload'],
-            },
-        }),
-})
+});
 
-export default ReduxStore;
 
 /*
 The slice reducers were automatically passed to combineReducers()
