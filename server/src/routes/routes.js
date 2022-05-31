@@ -17,14 +17,8 @@ Router.post('/create', async (req, res) => {
 })
 
 Router.get('/records', async (req, res) => {
-    await pool.query('SELECT * FROM records'), (error, result) => {
-        if (error) {
-            console.log(error);
-        } else {
-            res.send(result);
-        }
-    }
-    
+    const records = await pool.query('SELECT * FROM records')
+    res.send(records)
 });
 
 module.exports = Router;

@@ -10,14 +10,18 @@ const MyFinances = () =>  {
     const getRecords = () => {
         axios.get('http://localhost:5000/records').then((response) => {
             console.log(response);
+            setBudgetList(response.data)
         })
     }
     return(
         <>
         <div className='divFinances'>
-        <button></button>
+        <button onClick={getRecords}>I'm the records list</button>
         <AddBoxIcon/>
-        <BudgetList concept="Entertainment" amount={200} dateOfRecord="2022/05/29" typeOfRecord="expense" category="Other" />
+        
+        {budgetList.map((record) => {
+            return <BudgetList concept={record.concept} amount={record.amount} dateOfRecord={record.dateOfRecord} typeOfRecord={record.typeOfRecord} category={record.category} />
+        })}
         </div>
         </>
     )
