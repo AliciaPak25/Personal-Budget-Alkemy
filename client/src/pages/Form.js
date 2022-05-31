@@ -5,7 +5,6 @@ import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import "react-datepicker/dist/react-datepicker.css";
 import MenuItem from '@mui/material/MenuItem';
 import ListSubheader from '@mui/material/ListSubheader';
 import Select from '@mui/material/Select';
@@ -66,7 +65,7 @@ const Form = () => {
     const [dateOfRecord, setDateOfRecord] = useState('');
     const [typeOfRecord, setTypeOfRecord] = useState('');
     const [category, setCategory] = useState('');
-
+    //radio button
     const handleChange = (event) => {
         setTypeOfRecord(event.target.value);
         };
@@ -78,7 +77,7 @@ const Form = () => {
         name: 'typeOfRecord',
         inputProps: { 'aria-label': item },
         });
-
+    //add function
     const addRecord = () => {
         axios.post('http://localhost:5000/create', {
         concept: concept, 
