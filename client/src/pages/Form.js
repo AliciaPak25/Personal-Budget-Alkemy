@@ -14,51 +14,6 @@ import axios from 'axios';
 
 
 const Form = () => {
-    /* const { budget, status } = useSelector((state) => state.budget)
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(addRecord())
-    },[]) */
-
-    //select
-    /* const [category, setCategory] = useState('');
-
-    const handleChange = (event) => {
-        setCategory(event.target.value);
-    };
-
-    const handleSelect = (event) => {
-        handleChange(event);
-        handleInputChange(event);
-    }; */
-    //submit section, all info sent to backend
-  /*   const [newRecord, setNewRecord] = useState({
-        concept: '',
-        amount: 0,
-        dateOfRecord: '',
-        typeOfRecord: '',
-        category: '', 
-        from: "form-budget"
-    })
-
-    const handleInputChange = (event) => {
-        setNewRecord({
-            ...newRecord,
-            [event.target.name]: event.target.value
-        })
-    } 
-
-    const handleSubmit = async (event) => {
-        event.preventDefault()
-        
-        await setNewRecord({concept: '',
-        amount: 0,
-        dateOfRecord: '',
-        typeOfRecord: '',
-        category: '', 
-        from: "form-budget"})
-    } */
 
     const [concept, setConcept] = useState('');
     const [amount, setAmount] = useState(0);
@@ -129,29 +84,15 @@ const Form = () => {
                 <fieldset className='fieldset'>
                     <legend className='legend'>Date</legend>
                     <TextField id="outlined-basic" label="" variant="outlined" placeholder="YYYY/MM/DD, example: 2022/05/30" className='inputWidth' onChange={(event) => {setDateOfRecord(event.target.value);}} name='dateOfRecord' />
-                    {/* <DatePicker
-                    selected={startDate} 
-                    onChange={handleDate}
-                    name='dateOfRecord'
-                    dateFormat="yyyy/MM/dd" 
-                    minDate={new Date('1900/03/01')}
-                    maxDate={new Date('2030/06/01')}
-                    /> */}
                 </fieldset>
                 <fieldset className='fieldset'>
                     <legend className='legend'>Type</legend>
                     <div className='divRadios'>
                         <div className='divRadio'>
                         <Radio {...controlProps('income')} color="success" />
-                            {/* <input color="success" name='typeofRecord' onChange={(event)=>{setTypeOfRecord(event.target.value)}} value='income' type="radio"/> */}
                             <label>Income</label>
                         </div>
                         <div className='divRadio'>
-                            {/*  <input
-                                value='expense'
-                                name='typeofRecord'
-                                type="radio"
-                            /> */}
                             <Radio
                                 {...controlProps('expense')}
                                 sx={{
@@ -194,7 +135,6 @@ const Form = () => {
                     Done
                 </button>
             </form>
-           {/*  {status === 'success' ? (budget) : null}  */}
         </div>
     );
 }

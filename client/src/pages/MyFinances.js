@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/MyFinances.css'
 import axios from 'axios';
 import Box from '@mui/material/Box';
@@ -33,6 +33,9 @@ const MyFinances = () =>  {
             setBudgetList(response.data)
         })
     }
+    useEffect(() =>{
+        getRecords()
+    },[])
     const updateRecord = (id) => {
         axios.put(`http://localhost:5000/update/${id}`, {
         concept: newConcept,
@@ -70,14 +73,13 @@ const MyFinances = () =>  {
     return(
         <>
         <div className='divFinances'>
-        <button onClick={getRecords}>I'm the records list</button>
         {budgetList.length === 0 ? (<>
         <h1>Oops! You don't have movements. Start creating your budget from the 'add to budget' section</h1>
-        <button>Create a record</button>
+        {/* <button>Create a record</button> */}
         </>):
         budgetList.map((record) => {
             return <div key={record.id}>
-                <Box sx={{ minWidth: 600, marginBottom: '1em' }}>
+                <Box sx={{ minWidth: 400, marginBottom: '1em', marginTop: '1em' }}>
                 <Card variant="outlined">
                     <CardContent>
                     {!editing ?
@@ -132,9 +134,9 @@ const MyFinances = () =>  {
                     }
                     </CardContent>
                 <CardActions>
-                    <IconButton edge="end" aria-label="delete">
+                    {/* <IconButton edge="end" aria-label="delete">
                         <AddBoxIcon/>
-                    </IconButton>
+                    </IconButton> */}
                     <IconButton edge="end" onClick={() => {modifyingRecord(record.id)}}>
                     {!editing ? (<EditIcon/>) : <CheckCircleIcon/>}
                     </IconButton>
